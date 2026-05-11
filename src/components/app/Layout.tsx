@@ -139,9 +139,10 @@ const Layout = () => {
                         <i className="ri-phone-line" title="Call"></i>
                       </button>
 
+                       <Link to="/app/video-call">
                        <button className="hover:text-amber-500 text-amber-600">
                         <i className="ri-video-on-ai-line" title="Video Call"></i>
-                      </button>
+                      </button></Link>
 
                       
                       
