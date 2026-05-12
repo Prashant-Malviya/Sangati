@@ -8,12 +8,13 @@ const ButtonModel = {
   warning: "bg-orange-500 hover:bg-orange-600 rounded font-medium text-white px-6 py-2",
   dark: "bg-zinc-500 hover:bg-zinc-600 rounded font-medium text-white px-6 py-2",
   success: "bg-green-500 hover:bg-green-600 rounded font-medium text-white px-6 py-2",
-  info: "bg-cyan-500 hover:bg-cyan-600 rounded font-medium text-white px-6 py-2"
+  info: "bg-cyan-500 hover:bg-cyan-600 rounded font-medium text-white px-6 py-2",
+  pink:"bg-pink-500 hover:bg-pink-600 rounded font-medium text-white px-6 py-2"
 }
 
 interface ButtonInterface {
   children : string;
-  type? : "primary" | "secondary" | "danger" | "warning" | "dark" | "success" | "info"
+  type? : "primary" | "secondary" | "danger" | "warning" | "dark" | "success" | "info" | "pink"
   onClick?: ()=>void
   icon?: string
 }

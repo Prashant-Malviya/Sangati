@@ -131,13 +131,20 @@ const Layout = () => {
                   />
 
                   <div className="space-x-3">
-                      <button className="hover:text-pink-700 text-pink-800">
+                    <Link to="/app/chat">
+
+                     <button className="hover:text-pink-700 text-pink-800">
                         <i className="ri-chat-ai-line" title="Chat"></i>
                       </button>
+                    
+                    </Link>
+                     
 
+                      <Link to="/app/audio-call">
                        <button className="hover:text-green-600 text-green-700">
                         <i className="ri-phone-line" title="Call"></i>
                       </button>
+                      </Link>
 
                        <Link to="/app/video-call">
                        <button className="hover:text-amber-500 text-amber-600">
