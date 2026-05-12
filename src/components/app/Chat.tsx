@@ -1,4 +1,3 @@
-import React from "react";
 import Avatar from "../shared/Avatar";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
