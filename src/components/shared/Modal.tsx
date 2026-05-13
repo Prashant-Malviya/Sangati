@@ -7,14 +7,15 @@ interface ModalInterface {
     children?: string;
     open?: boolean;
     onClose?: ()=>void;
+    key?: string | number;
 
 }
 
-const Modal : FC<ModalInterface> = ({open,onClose,title="this is modal title here...",children="modal description comes here"})=>{
+const Modal : FC<ModalInterface> = ({open,onClose,title="this is modal title here...",children="modal description comes here",key=0})=>{
     return(
         <>
         {open &&
-         <div className="h-screen flex items-center justify-center bg-black fixed top-0 left-0 w-full animate__animated aimate__fadeIn"
+         <div key={key} className="h-screen flex items-center justify-center bg-black fixed top-0 left-0 w-full animate__animated aimate__fadeIn"
         style={
             {
                 background: 'rgba(0,0,0,0.9'

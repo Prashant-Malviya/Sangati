@@ -5,9 +5,10 @@ interface DrawerInterface {
     title?: string;
     open?: boolean;
     close?: ()=> void;
+    key?: string | number;
 }
 
-const Drawer = ({children="Your content goes here", title="Drawer title",open=true, close}) => {
+const Drawer : FC<DrawerInterface> = ({children="Your content goes here", title="Drawer title",open=true, close, key=0}) => {
   return (
     <div
      style={
@@ -16,7 +17,7 @@ const Drawer = ({children="Your content goes here", title="Drawer title",open=tr
             transition: '0.3s'
         }
      }
-     className='shadow-lg fixed top-0 w-6/12 h-full overflow-auto p-8 z-[10000] space-y-4'
+     className='shadow-lg fixed top-0 w-6/12 h-full overflow-auto p-8 z-[10000] space-y-4' key={key}
     >
         <h1 className='text-lg font-semibold'>{title}</h1>
 

@@ -4,15 +4,18 @@ interface InputInterface {
     name: string;
     type?: string;
     placeholder?: string
+    key: string | number
 }
 
-const Input : FC<InputInterface> = ({name,placeholder,type="text"}) => {
+const Input : FC<InputInterface> = ({name,placeholder,type="text", key=0}) => {
   return (
     <input
     className='border border-gray-300 rounded px-3 py-2 w-full'
     placeholder={placeholder}
     name={name}
-    type={type} />
+    type={type}
+    key={key}
+    />
   )
 }
 

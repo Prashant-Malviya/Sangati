@@ -7,11 +7,21 @@ interface AvatarInterface {
   titleColor?: string;
   subtitleColor?: string;
   size?: "lg" | "md"
+  key?: string | number
 }
 
-const Avatar: FC<AvatarInterface> = ({size="lg", title, subtitle='subtitle missing', image, titleColor="3000000",subtitleColor="#f5f5f5" }) => {
+const Avatar: FC<AvatarInterface> = 
+({
+  size="lg", 
+  title, 
+  subtitle='subtitle missing', 
+  image, 
+  titleColor="3000000",
+  subtitleColor="#f5f5f5" ,
+  key
+}) => {
   return (
-    <div className="flex gap-3 items-center">
+    <div className="flex gap-3 items-center" key={key}>
       {
       image 
       && (

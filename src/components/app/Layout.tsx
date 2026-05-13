@@ -122,7 +122,7 @@ const Layout = () => {
                   <div>
                     <h1 className="text-black font-medium">Mohan bro</h1>
 
-                    <button className="bg-pink-500 hover:bg-pink-600 text-white px-2 py-1.5 rounded text-xs mt-1">
+                    <button className="bg-pink-500 hover:bg-pink-600 text-white px-2 py-1.5 rounded text-xs mt-1 font-medium">
                       <i className="ri-user-add-line mr-1">
                       </i>
                       Add Friend
