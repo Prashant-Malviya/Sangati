@@ -1,7 +1,19 @@
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+import { useContext, useState } from "react";
+import Context from "./Context";
 
-export default Home
+const Home = () => {
+
+  const {session,setSession} = useContext(Context)
+
+  return (
+   <div>
+    <button onClick={()=>setSession("Namaste@gmail.com")}>
+    Click Me
+    </button>
+
+    <p>{session}</p>
+    </div>
+  );
+};
+
+export default Home;
