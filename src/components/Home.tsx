@@ -1,24 +1,26 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Home = () => {
 
-const videoRef = useRef<HTMLVideoElement | null>(null);
 
-const test = ()=>{
- 
-  if(videoRef.current)
-  {
-    const player = videoRef.current;
-    player.src = "https://www.w3schools.com/Html/mov_bbb.mp4"
-    player.play()
+  // const [color, setColor] = useState("red");
+
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+
+  const handleHeading = ()=>{
+    if(headingRef.current){
+      const h1 = headingRef.current;
+      h1.style.color = "orange"
+    }
   }
-}
 
   return (
     <div>
-      Home
-      <video ref={videoRef} id="video" controls width={720} />
-      <button onClick={test}>Test</button>
+      
+     {/* <h1 style={{color:color}}>Home</h1>
+     <button onClick={()=>setColor("blue")}>Test</button> */}
+     <h1 ref={headingRef}>Home</h1>
+     <button onClick={handleHeading}>Test</button>
     </div>
   );
 };
