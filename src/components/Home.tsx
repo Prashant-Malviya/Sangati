@@ -1,26 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
+import Context from "./Context";
 
 const Home = () => {
 
-
-  // const [color, setColor] = useState("red");
-
-  const headingRef = useRef<HTMLHeadingElement | null>(null);
-
-  const handleHeading = ()=>{
-    if(headingRef.current){
-      const h1 = headingRef.current;
-      h1.style.color = "orange"
-    }
-  }
+  const {session,setSession} = useContext(Context)
 
   return (
-    <div>
-      
-     {/* <h1 style={{color:color}}>Home</h1>
-     <button onClick={()=>setColor("blue")}>Test</button> */}
-     <h1 ref={headingRef}>Home</h1>
-     <button onClick={handleHeading}>Test</button>
+   <div>
+    <button onClick={()=>setSession("Namaste@gmail.com")}>
+    Click Me
+    </button>
+
+    <p>{session}</p>
     </div>
   );
 };
