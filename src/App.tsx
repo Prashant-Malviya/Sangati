@@ -12,16 +12,14 @@ import Video from "./components/app/Video";
 import Audio from "./components/app/Audio";
 import Chat from "./components/app/Chat";
 import NotFound from "./components/NotFound";
-import Context from "./components/Context";
-import { useState } from "react";
+import Context from "./Context";
 
 
 const App = () => {
 
-  const [session, setSession] = useState(null);
 
   return (
-    <Context.Provider value={{session,setSession}}>
+    <Context.Provider value={"Namaste"}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -40,7 +38,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </Context.Provider>
+      </Context.Provider>
   );
 };
 
