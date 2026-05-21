@@ -2,8 +2,27 @@ import { Link } from "react-router-dom"
 import Button from "./shared/Button"
 import Card from "./shared/Card"
 import Input from "./shared/Input"
+import Form, { type FormDataType } from "./shared/Form"
+import HttpInterceptor from "../lib/HttpInterceptor"
+
+// interface SignupFormInterface {
+//   email: string
+//   password: string
+//   fullname: string
+//   mobile: string
+// }
 
 const Signup = () => {
+
+  const signup = async (values: FormDataType) =>{
+    try {
+      const {data} = await HttpInterceptor.post("/auth/signup",values)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
       <div className="w-6/12 animate__animated animate__fadIn">
@@ -18,7 +37,7 @@ const Signup = () => {
 
               </div>
               
-              <form className="space-y-6">
+              <Form className="space-y-6" onValue={signup}>
 
                 <Input
 
@@ -46,7 +65,7 @@ const Signup = () => {
 
                 <Button type="pink" icon="arrow-right-up-line">Sign up</Button>
 
-              </form>
+              </Form>
 
 
               <div className="flex  gap-2">

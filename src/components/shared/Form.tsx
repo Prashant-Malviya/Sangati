@@ -1,12 +1,12 @@
-import React, { type FC, type FormEvent, type ReactNode } from 'react'
+import type {FC, FormEvent, ReactNode} from 'react'
 
 interface FormInterface {
     children: ReactNode
-    className: string
-    onValue: (value:DataType)=>void
+    className?: string
+    onValue?: (value:FormDataType)=>void
 }
 
-type DataType = Record<string,string>
+export type FormDataType = Record<string,string>
 
 const Form: FC<FormInterface> = ({children, className, onValue}) => {
 
@@ -15,12 +15,12 @@ const Form: FC<FormInterface> = ({children, className, onValue}) => {
         const form = e.currentTarget
         const formData = new FormData(form)
 
-        const data: DataType = {}
+        const data: FormDataType = {}
         
         formData.forEach((value,name)=>{
             data[name] = value.toString()
         })
-        onValue(data);
+        if(onValue) onValue(data);
     }
   return (
     <form className={className} onSubmit={handleForm}>
