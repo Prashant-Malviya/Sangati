@@ -2,9 +2,29 @@ import { Link } from "react-router-dom";
 import Button from "./shared/Button";
 import Card from "./shared/Card";
 import Input from "./shared/Input";
-import Form from "./shared/Form";
+import Form, { type FormDataType } from "./shared/Form";
+import HttpInterceptor from "../lib/HttpInterceptor";
+import { toast } from "react-toastify";
+import axios, { AxiosError } from "axios";
 
 const Login = () => {
+  const login = async (values: FormDataType) => {
+    try {
+      const { data } = await HttpInterceptor.post("/auth/login", values);
+
+      console.log(data);
+    } catch (error: unknown) {
+      // toast.error(error.response.data.message)
+
+      if (axios.isAxiosError(error))
+        return toast.error(error.response?.data.message);
+      if (error instanceof Error) {
+        return toast.error(error.message);
+      }
+
+      toast.error("Network error");
+    }
+  };
 
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
@@ -14,12 +34,12 @@ const Login = () => {
             <div className="p-8 space-y-6">
               <div>
                 <h1 className="text-2xl font-bold text-pink-500 capitalize ">
-                  Welcome back to your circle 
+                  Welcome back to your circle
                 </h1>
                 <p>Lets connect...</p>
               </div>
 
-              <Form className="space-y-6" onValue={(v)=>console.log(v)}>
+              <Form className="space-y-6" onValue={login}>
                 <Input name="email" placeholder="Email id" />
 
                 <Input
