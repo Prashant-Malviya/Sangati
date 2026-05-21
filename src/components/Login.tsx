@@ -4,6 +4,7 @@ import Card from "./shared/Card";
 import Input from "./shared/Input";
 
 const Login = () => {
+
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
       <div className="w-6/12 animate__animated animate__fadIn">
@@ -12,7 +13,7 @@ const Login = () => {
             <div className="p-8 space-y-6">
               <div>
                 <h1 className="text-2xl font-bold text-pink-500 capitalize ">
-                  Welcome back to your circle
+                  Welcome back to your circle 
                 </h1>
                 <p>Lets connect...</p>
               </div>

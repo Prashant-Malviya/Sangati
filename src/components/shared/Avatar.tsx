@@ -17,7 +17,7 @@ const Avatar: FC<AvatarInterface> =
   subtitle='subtitle missing', 
   image, 
   titleColor="3000000",
-  subtitleColor="#f5f5f5" ,
+  subtitleColor="#f5f5f5",
   key
 }) => {
   return (
