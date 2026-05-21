@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Button from "./shared/Button";
 import Card from "./shared/Card";
 import Input from "./shared/Input";
+import Form from "./shared/Form";
 
 const Login = () => {
 
@@ -18,7 +19,7 @@ const Login = () => {
                 <p>Lets connect...</p>
               </div>
 
-              <form className="space-y-6">
+              <Form className="space-y-6" onValue={(v)=>console.log(v)}>
                 <Input name="email" placeholder="Email id" />
 
                 <Input
@@ -30,7 +31,7 @@ const Login = () => {
                 <Button type="pink" icon="arrow-right-up-line">
                   Sign In
                 </Button>
-              </form>
+              </Form>
 
               <div className="flex  gap-2">
                 <p>Don't have an account ?</p>
