@@ -4,8 +4,7 @@ import Card from "./shared/Card";
 import Input from "./shared/Input";
 import Form, { type FormDataType } from "./shared/Form";
 import HttpInterceptor from "../lib/HttpInterceptor";
-import { toast } from "react-toastify";
-import axios, { AxiosError } from "axios";
+import CatchError from "../lib/CatchError";
 
 const Login = () => {
   const login = async (values: FormDataType) => {
@@ -14,15 +13,7 @@ const Login = () => {
 
       console.log(data);
     } catch (error: unknown) {
-      // toast.error(error.response.data.message)
-
-      if (axios.isAxiosError(error))
-        return toast.error(error.response?.data.message);
-      if (error instanceof Error) {
-        return toast.error(error.message);
-      }
-
-      toast.error("Network error");
+     CatchError(error,"top-right")
     }
   };
 
