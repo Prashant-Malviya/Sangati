@@ -1,8 +1,9 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Avatar from "../shared/Avatar";
 import Card from "../shared/Card";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Dashboard from "./Dashboard";
+import Context from "../../Context";
 
 const Layout = () => {
   const [leftAsideSize, setLeftAsideSize] = useState(350);
@@ -10,6 +11,8 @@ const Layout = () => {
   const collapseSize = 140;
 
   const { pathname } = useLocation();
+
+  const {session} = useContext(Context);
 
   const sidebarStyle = {
     backgroundImage:
@@ -52,14 +55,17 @@ const Layout = () => {
             ></i>
           ) : (
             <div className="animate__animated animate__fadeIn">
-              <Avatar
-                title="Prashant Malviya"
-                subtitle="Full Stack Developer"
+             {
+              session &&
+               <Avatar
+                title={session.fullname}
+                subtitle={session.email}
                 image="/images/avatar.png"
                 titleColor="white"
                 subtitleColor="#ddd"
                 size={leftAsideSize === collapseSize ? "md" : "lg"}
               />
+             }
             </div>
           )}
 
