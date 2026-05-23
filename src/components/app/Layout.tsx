@@ -11,8 +11,7 @@ const Layout = () => {
   const collapseSize = 140;
 
   const { pathname } = useLocation();
-
-  const {session} = useContext(Context);
+  const { session } = useContext(Context);
 
   const sidebarStyle = {
     backgroundImage:
@@ -55,17 +54,16 @@ const Layout = () => {
             ></i>
           ) : (
             <div className="animate__animated animate__fadeIn">
-             {
-              session &&
-               <Avatar
-                title={session.fullname}
-                subtitle={session.email}
-                image="/images/avatar.png"
-                titleColor="white"
-                subtitleColor="#ddd"
-                size={leftAsideSize === collapseSize ? "md" : "lg"}
-              />
-             }
+              {session && (
+                <Avatar
+                  title={session.fullname}
+                  subtitle={session.email}
+                  image="/images/avatar.png"
+                  titleColor="white"
+                  subtitleColor="#ddd"
+                  size={leftAsideSize === collapseSize ? "md" : "lg"}
+                />
+              )}
             </div>
           )}
 
@@ -121,7 +119,7 @@ const Layout = () => {
           }
           divider
         >
-          {pathname === '/app' ? <Dashboard /> : <Outlet />}
+          {pathname === "/app" ? <Dashboard /> : <Outlet />}
         </Card>
       </section>
 

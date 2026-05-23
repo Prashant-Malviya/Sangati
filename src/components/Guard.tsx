@@ -1,34 +1,30 @@
-import { useContext, useEffect } from "react"
-import {Outlet, Navigate} from "react-router-dom"
+import { useContext, useEffect } from "react";
+import { Outlet, Navigate } from "react-router-dom";
 import HttpInterceptor from "../lib/HttpInterceptor";
 import Context from "../Context";
 
 const Guard = () => {
+  const { session, setSession } = useContext(Context);
 
-    const {session,setSession} = useContext(Context);
+  useEffect(() => {
+    getSession();
+  }, []);
 
-    useEffect(()=>{
-         getSession();
-    },[])
+  const getSession = async () => {
+    try {
+      const { data } = await HttpInterceptor.get("/auth/session");
 
-    const getSession = async()=>{
-        try {
-          const {data} =  await HttpInterceptor.get("/auth/session")
-
-          setSession(data);
-        } catch (error) {
-            setSession(false);
-        }
+      setSession(data);
+    } catch (error) {
+      setSession(false);
     }
+  };
 
-    if(session === null)
-        return null;
+  if (session === null) return null;
 
-    if(session === false)
-        return <Navigate to="/login" />
+  if (session === false) return <Navigate to="/login" />;
 
-  return <Outlet />
-  
-}
+  return <Outlet />;
+};
 
-export default Guard
+export default Guard;

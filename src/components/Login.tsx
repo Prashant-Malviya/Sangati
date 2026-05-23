@@ -7,7 +7,6 @@ import HttpInterceptor from "../lib/HttpInterceptor";
 import CatchError from "../lib/CatchError";
 
 const Login = () => {
-
   const navigate = useNavigate();
   const login = async (values: FormDataType) => {
     try {
@@ -15,7 +14,7 @@ const Login = () => {
 
       navigate("/app");
     } catch (error: unknown) {
-     CatchError(error,"top-right")
+      CatchError(error, "top-right");
     }
   };
 

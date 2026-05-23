@@ -1,34 +1,31 @@
-import type {FC, FormEvent, ReactNode} from 'react'
+import type { FC, FormEvent, ReactNode } from "react";
 
 interface FormInterface {
-    children: ReactNode
-    className?: string
-    onValue?: (value:FormDataType)=>void
+  children: ReactNode;
+  className?: string;
+  onValue?: (value: FormDataType) => void;
 }
 
-export type FormDataType = Record<string,string>
+export type FormDataType = Record<string, string>;
 
-const Form: FC<FormInterface> = ({children, className, onValue}) => {
+const Form: FC<FormInterface> = ({ children, className, onValue }) => {
+  const handleForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    const handleForm = (e: FormEvent<HTMLFormElement>)=> {
-        e.preventDefault()
-        const form = e.currentTarget
-        const formData = new FormData(form)
+    const data: FormDataType = {};
 
-        const data: FormDataType = {}
-        
-        formData.forEach((value,name)=>{
-            data[name] = value.toString()
-        })
-        if(onValue) onValue(data);
-    }
+    formData.forEach((value, name) => {
+      data[name] = value.toString();
+    });
+    if (onValue) onValue(data);
+  };
   return (
     <form className={className} onSubmit={handleForm}>
-        {
-            children
-        }
+      {children}
     </form>
-  )
-}
- 
-export default Form
+  );
+};
+
+export default Form;

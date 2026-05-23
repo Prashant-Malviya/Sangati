@@ -21,15 +21,15 @@ const Video = () => {
         </button>
 
         <button className="absolute bottom-5 right-5 text-x px-2.5 py-1 rounded-lg text-white hover:scale-125">
-            <i className="ri-fullscreen-exit-line"></i>
+          <i className="ri-fullscreen-exit-line"></i>
         </button>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-<div className="bg-black w-full h-0 relative pb-[56.25%] rounded-xl">
-        <video className="w-full h-full absolute top-0 left-0"></video>
-        <button
-          className="
+        <div className="bg-black w-full h-0 relative pb-[56.25%] rounded-xl">
+          <video className="w-full h-full absolute top-0 left-0"></video>
+          <button
+            className="
             absolute bottom-4 left-4
             bg-black/30
             backdrop-blur-sm
@@ -39,32 +39,29 @@ const Video = () => {
             rounded-md
             border border-white/10
           "
-        >
-          Prashant Malviya
-        </button>
-      </div>
+          >
+            Prashant Malviya
+          </button>
+        </div>
 
-      <Button type="primary" icon="user-add-line">Add</Button>
-
-     
+        <Button type="primary" icon="user-add-line">
+          Add
+        </Button>
       </div>
 
       <div className="flex justify-between items-center">
         <div className="space-x-4">
-            <button className="bg-amber-300 text-white w-12 h-12 rounded-full hover:bg-amber-500 hover:text-white">
+          <button className="bg-amber-300 text-white w-12 h-12 rounded-full hover:bg-amber-500 hover:text-white">
             <i className="ri-mic-line"></i>
-        </button>
+          </button>
 
-
-         <button className="bg-green-500 text-white w-12 h-12 rounded-full hover:bg-green-400 hover:text-white">
+          <button className="bg-green-500 text-white w-12 h-12 rounded-full hover:bg-green-400 hover:text-white">
             <i className="ri-video-on-ai-line"></i>
-        </button>
+          </button>
 
-
-        <button className="bg-blue-500 text-white w-12 h-12 rounded-full hover:bg-blue-400 hover:text-white">
+          <button className="bg-blue-500 text-white w-12 h-12 rounded-full hover:bg-blue-400 hover:text-white">
             <i className="ri-tv-2-line"></i>
-        </button>
-        
+          </button>
         </div>
         <Button icon="close-circle-fill">End</Button>
       </div>
