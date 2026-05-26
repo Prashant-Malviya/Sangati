@@ -8,9 +8,11 @@ interface AvatarInterface {
   subtitleColor?: string;
   size?: "lg" | "md";
   key?: string | number;
+  onClick?: ()=> void;
 }
 
 const Avatar: FC<AvatarInterface> = ({
+  onClick,
   size = "lg",
   title,
   subtitle = "subtitle missing",
@@ -23,6 +25,7 @@ const Avatar: FC<AvatarInterface> = ({
     <div className="flex gap-3 items-center" key={key}>
       {image && (
         <img
+          onClick={onClick}
           src={image}
           className={`${size === "lg" ? "w-12 h-12" : "w-8 h-8"} rounded-full object-cover`}
         />
