@@ -4,6 +4,7 @@ import Card from "../shared/Card";
 import { useContext, useState } from "react";
 import Dashboard from "./Dashboard";
 import Context from "../../Context";
+import HttpInterceptor from "../../lib/HttpInterceptor";
 
 const Layout = () => {
   const [leftAsideSize, setLeftAsideSize] = useState(350);
@@ -40,6 +41,67 @@ const Layout = () => {
     return path.split("/").pop()?.split("-").join(" ");
   };
 
+  const uploadImage = ()=>{
+    const input = document.createElement("input");
+
+    input.type = "file"
+    input.accept = "image/*"
+    input.click()
+    input.onchange = async()=>{
+
+      if(!input.files) return;
+      
+      const file = input.files[0];
+
+      const payload = {
+        path: "demp/namaste.png",
+        type: file.type,
+      }
+
+     try {
+
+      const options = {
+        headers: {
+          'Content-Type': file.type
+        }
+      }
+      
+      const {data} = await HttpInterceptor.post("/storage/upload", payload)
+
+      await HttpInterceptor.put(data.url, file, options)
+
+      console.log("success");
+
+     } catch (error) {
+      
+      console.log(error);
+     }
+    }
+  }
+
+  const download = async()=>{
+    try {
+      
+      const payload = {
+        path: "demp/namaste.png"
+      }
+
+      const {data} = await HttpInterceptor.post("/storage/download",payload)
+
+      const a = document.createElement("a");
+
+      a.href = data.url;
+
+      a.download = "namaste.png"
+
+
+      a.click();
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <aside
@@ -62,6 +124,7 @@ const Layout = () => {
                   titleColor="white"
                   subtitleColor="#ddd"
                   size={leftAsideSize === collapseSize ? "md" : "lg"}
+                  onClick={uploadImage}
                 />
               )}
             </div>
@@ -121,6 +184,8 @@ const Layout = () => {
         >
           {pathname === "/app" ? <Dashboard /> : <Outlet />}
         </Card>
+
+        <button onClick={download}>Download</button>
       </section>
 
       <aside
