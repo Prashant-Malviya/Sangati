@@ -79,29 +79,6 @@ const Layout = () => {
     }
   }
 
-  const download = async()=>{
-    try {
-      
-      const payload = {
-        path: "demp/namaste.png"
-      }
-
-      const {data} = await HttpInterceptor.post("/storage/download",payload)
-
-      const a = document.createElement("a");
-
-      a.href = data.url;
-
-      a.download = "namaste.png"
-
-
-      a.click();
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <div className="min-h-screen">
       <aside
@@ -185,7 +162,7 @@ const Layout = () => {
           {pathname === "/app" ? <Dashboard /> : <Outlet />}
         </Card>
 
-        <button onClick={download}>Download</button>
+        
       </section>
 
       <aside
