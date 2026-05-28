@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import Dashboard from "./Dashboard";
 import Context from "../../Context";
 import HttpInterceptor from "../../lib/HttpInterceptor";
+import {v4 as uuid} from 'uuid'
 
 const Layout = () => {
   const [leftAsideSize, setLeftAsideSize] = useState(350);
@@ -12,11 +13,11 @@ const Layout = () => {
   const collapseSize = 140;
 
   const { pathname } = useLocation();
-  const { session } = useContext(Context);
+  const { session, setSession } = useContext(Context);
 
   const sidebarStyle = {
     backgroundImage:
-      "radial-gradient( circle farthest-corner at 6.3% 21.8%,  rgba(236,6,117,1) 0%, rgba(13,32,67,1) 90% )",
+      "radial-gradient(circle farthest-corner at 6.3% 21.8%,  rgba(236,6,117,1) 0%, rgba(13,32,67,1) 90%)",
   };
 
   const menus = [
@@ -53,8 +54,10 @@ const Layout = () => {
       
       const file = input.files[0];
 
+      const path = `profile-pictures/${uuid()}.png`
+
       const payload = {
-        path: "demp/namaste.png",
+        path,
         type: file.type,
       }
 
@@ -69,8 +72,9 @@ const Layout = () => {
       const {data} = await HttpInterceptor.post("/storage/upload", payload)
 
       await HttpInterceptor.put(data.url, file, options)
+     const {data : user} = await HttpInterceptor.put("/auth/profile-picture", {path})
 
-      console.log("success");
+     setSession({...session, image: user.image})
 
      } catch (error) {
       
@@ -97,7 +101,7 @@ const Layout = () => {
                 <Avatar
                   title={session.fullname}
                   subtitle={session.email}
-                  image="/images/avatar.png"
+                  image={session.image || "/images/avatar.png"}
                   titleColor="white"
                   subtitleColor="#ddd"
                   size={leftAsideSize === collapseSize ? "md" : "lg"}
