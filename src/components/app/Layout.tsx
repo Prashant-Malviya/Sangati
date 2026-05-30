@@ -5,7 +5,11 @@ import { useContext, useState } from "react";
 import Dashboard from "./Dashboard";
 import Context from "../../Context";
 import HttpInterceptor from "../../lib/HttpInterceptor";
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from "uuid";
+import useSWR, { mutate } from "swr";
+import Fetcher from "../../lib/fetcher";
+
+const EightMinuteInMs = 8*60*1000;
 
 const Layout = () => {
   const [leftAsideSize, setLeftAsideSize] = useState(350);
@@ -13,12 +17,20 @@ const Layout = () => {
   const collapseSize = 140;
 
   const { pathname } = useLocation();
+  const { error } = useSWR("/auth/refresh-token", Fetcher, {
+    refreshInterval: EightMinuteInMs,
+    shouldRetryOnError: false,
+  });
   const { session, setSession } = useContext(Context);
 
   const sidebarStyle = {
     backgroundImage:
       "radial-gradient(circle farthest-corner at 6.3% 21.8%,  rgba(236,6,117,1) 0%, rgba(13,32,67,1) 90%)",
   };
+
+  //  data && console.log(data.message);
+
+  //  error && console.log(error.response.data.message);
 
   const menus = [
     {
@@ -42,46 +54,42 @@ const Layout = () => {
     return path.split("/").pop()?.split("-").join(" ");
   };
 
-  const uploadImage = ()=>{
+  const uploadImage = () => {
     const input = document.createElement("input");
 
-    input.type = "file"
-    input.accept = "image/*"
-    input.click()
-    input.onchange = async()=>{
+    input.type = "file";
+    input.accept = "image/*";
+    input.click();
+    input.onchange = async () => {
+      if (!input.files) return;
 
-      if(!input.files) return;
-      
       const file = input.files[0];
 
-      const path = `profile-pictures/${uuid()}.png`
+      const path = `profile-pictures/${uuid()}.png`;
 
       const payload = {
         path,
         type: file.type,
+      };
+
+      try {
+        const options = {
+          headers: {
+            "Content-Type": file.type,
+          },
+        };
+
+        const { data } = await HttpInterceptor.post("/storage/upload", payload);
+
+        await HttpInterceptor.put(data.url, file, options);
+       const {data: user} = await HttpInterceptor.put("/auth/profile-picture", { path });
+       setSession({...session, image: user.image})
+       mutate("/auth/refresh-token");
+      } catch (error) {
+        console.log(error);
       }
-
-     try {
-
-      const options = {
-        headers: {
-          'Content-Type': file.type
-        }
-      }
-      
-      const {data} = await HttpInterceptor.post("/storage/upload", payload)
-
-      await HttpInterceptor.put(data.url, file, options)
-     const {data : user} = await HttpInterceptor.put("/auth/profile-picture", {path})
-
-     setSession({...session, image: user.image})
-
-     } catch (error) {
-      
-      console.log(error);
-     }
-    }
-  }
+    };
+  };
 
   return (
     <div className="min-h-screen">
@@ -165,8 +173,6 @@ const Layout = () => {
         >
           {pathname === "/app" ? <Dashboard /> : <Outlet />}
         </Card>
-
-        
       </section>
 
       <aside
