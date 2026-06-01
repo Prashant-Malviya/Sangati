@@ -3,7 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 import HttpInterceptor from "../lib/HttpInterceptor";
 import Context from "../Context";
 
-const Guard = () => {
+const AuthGuard = () => {
   const { session, setSession } = useContext(Context);
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const Guard = () => {
   return <Outlet />;
 };
 
-export default Guard;
+export default AuthGuard;

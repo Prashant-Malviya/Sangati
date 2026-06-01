@@ -1,13 +1,14 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation , useNavigate} from "react-router-dom";
 import Avatar from "../shared/Avatar";
 import Card from "../shared/Card";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import Context from "../../Context";
 import HttpInterceptor from "../../lib/HttpInterceptor";
 import { v4 as uuid } from "uuid";
 import useSWR, { mutate } from "swr";
-import Fetcher from "../../lib/fetcher";
+import Fetcher from "../../lib/Fetcher";
+import CatchError from "../../lib/CatchError";
 
 const EightMinuteInMs = 8*60*1000;
 
@@ -17,10 +18,18 @@ const Layout = () => {
   const collapseSize = 140;
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { error } = useSWR("/auth/refresh-token", Fetcher, {
     refreshInterval: EightMinuteInMs,
     shouldRetryOnError: false,
   });
+
+  useEffect(()=>{
+    if(error){
+      logout();
+    }
+  },[error])
+
   const { session, setSession } = useContext(Context);
 
   const sidebarStyle = {
@@ -49,6 +58,20 @@ const Layout = () => {
       label: "friends",
     },
   ];
+
+  const logout = async()=>{
+    try {
+
+    await HttpInterceptor.post("/auth/logout")
+    
+    navigate("/login")
+
+    } catch (error) {
+
+      CatchError(error);
+
+    }
+  }
 
   const getPathName = (path: string) => {
     return path.split("/").pop()?.split("-").join(" ");
@@ -135,7 +158,7 @@ const Layout = () => {
               </Link>
             ))}
 
-            <button className="flex items-center gap-2 text-gray-300 py-3 hover:text-white">
+            <button onClick={logout} className="flex items-center gap-2 text-gray-300 py-3 hover:text-white">
               <i className="ri-logout-circle-r-line text-xl" title="Logout"></i>
               <label
                 className={`${leftAsideSize === collapseSize ? "hidden" : ""}`}
