@@ -17,6 +17,7 @@ import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 import AuthGuard from "./guards/AuthGuard";
 import LoginGuard from "./guards/LoginGuard";
+import 'font-awesome/css/font-awesome.min.css'
 
 const App = () => {
   const [session, setSession] = useState(null);

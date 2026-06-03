@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import 'remixicon/fonts/remixicon.css'
 
 const ButtonModel = {
   primary:
@@ -61,6 +62,7 @@ interface ButtonInterface {
   onClick?: () => void;
   icon?: string;
   key?: string | number;
+  loading?: boolean
 }
 
 const Button: FC<ButtonInterface> = ({
@@ -69,7 +71,18 @@ const Button: FC<ButtonInterface> = ({
   onClick,
   icon,
   key = 0,
+  loading = false
 }) => {
+
+  if(loading)
+    return(
+      <button disabled className="text-gray-400">
+        <i className="fa fa-spinner fa-spin mr-2"></i>
+        Loading...
+      </button>
+    )
+
+
   return (
     <button className={ButtonModel[type]} onClick={onClick} key={key}>
       {icon && <i className={`ri-${icon} mr-1`}></i>}
