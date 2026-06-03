@@ -7,7 +7,7 @@ import HttpInterceptor from "../lib/HttpInterceptor";
 import CatchError from "../lib/CatchError";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
   const login = async (values: FormDataType) => {
     try {
       await HttpInterceptor.post("/auth/login", values);
@@ -48,7 +48,7 @@ const Login = () => {
               <div className="flex  gap-2">
                 <p>Don't have an account ?</p>
                 <Link
-                  to="/login"
+                  to="/signup"
                   className="text-pink-500 font-bold text-lg hover:underline"
                 >
                   Sign up
