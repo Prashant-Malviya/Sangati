@@ -49,7 +49,7 @@ const FriendSuggestion = () => {
           data && data.map((item: any, index: number) => (
               <div key={index} className="flex gap-4">
                 <img
-                  src= "/images/avatar.png"
+                  src= {item.image || "/images/avatar.png"}
                   alt="avatar"
                   className="w-16 h-16 rounded object-cover"
                 ></img>

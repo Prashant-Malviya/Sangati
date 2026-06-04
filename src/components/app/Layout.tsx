@@ -94,6 +94,7 @@ const Layout = () => {
       const payload = {
         path,
         type: file.type,
+        status: "public-read"
       };
 
       try {
@@ -106,9 +107,12 @@ const Layout = () => {
         const { data } = await HttpInterceptor.post("/storage/upload", payload);
 
         await HttpInterceptor.put(data.url, file, options);
+
        const {data: user} = await HttpInterceptor.put("/auth/profile-picture", { path });
+
        setSession({...session, image: user.image})
        mutate("/auth/refresh-token");
+       
       } catch (error) {
         console.log(error);
       }
