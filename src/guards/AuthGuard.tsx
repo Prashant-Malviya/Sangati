@@ -5,6 +5,9 @@ import Context from "../Context";
 import { Skeleton } from "antd";
 
 const AuthGuard = () => {
+
+  return <Outlet />
+
   const { session, setSession } = useContext(Context);
 
   useEffect(() => {

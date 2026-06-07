@@ -17,7 +17,7 @@ import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 import AuthGuard from "./guards/AuthGuard";
 import LoginGuard from "./guards/LoginGuard";
-import 'font-awesome/css/font-awesome.min.css'
+import "font-awesome/css/font-awesome.min.css";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -27,12 +27,13 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          
+          {/*           
           <Route element={<LoginGuard />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Route>
+            
+          </Route> */}
 
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route element={<AuthGuard />}>
             <Route path="/app" element={<Layout />}>
               <Route path="dashboard" element={<Dashboard />} />
