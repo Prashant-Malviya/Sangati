@@ -10,6 +10,7 @@ import useSWR, { mutate } from "swr";
 import Fetcher from "../../lib/Fetcher";
 import CatchError from "../../lib/CatchError";
 import FriendSuggestion from "./FriendSuggestion";
+import FriendRequest from "./FriendRequest";
 
 const EightMinuteInMs = 8*60*1000;
 
@@ -208,6 +209,7 @@ const Layout = () => {
         style={{ width: rightAsideSize, transition: "0.2s" }}
       >
        <FriendSuggestion />
+       <FriendRequest />
 
         <Card title="Friends" divider>
           <div className="space-y-4">

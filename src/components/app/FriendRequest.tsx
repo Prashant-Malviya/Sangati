@@ -3,7 +3,6 @@ import Fetcher from "../../lib/Fetcher";
 import useSWR, { mutate } from "swr";
 import { Empty, Skeleton } from "antd";
 import Error from "../shared/Error";
-import Button from "../shared/Button";
 import HttpInterceptor from "../../lib/HttpInterceptor";
 import { useState } from "react";
 import CatchError from "../../lib/CatchError";
@@ -11,22 +10,22 @@ import SmallButton from "../shared/SmallButton";
 import moment from "moment";
 import { toast } from "react-toastify";
 
-const FriendSuggestion = () => {
+const FriendRequest = () => {
   const [loading, setLoading] = useState({ state: false, index: 0 });
 
-  const { data, error, isLoading } = useSWR("/friend/suggestion", Fetcher);
+  const { data, error, isLoading } = useSWR("/friend/request", Fetcher);
 
-  const sendFriendRequest = async (id: string, index: number) => {
+  const acceptFriendRequest = async (id: string, index: number) => {
     try {
       setLoading({ state: true, index });
 
-      await HttpInterceptor.post("/friend", { friend: id });
+      await HttpInterceptor.put(`/friend/${id}`, { status: "accepted" });
 
-      toast.success("Friend request sent successfully", {
+      toast.success("Friend request accepted successfully", {
         position: "top-center",
       });
 
-      mutate("/friend/suggestion");
+      mutate("/friend/request");
       mutate("/friend");
     } catch (error) {
       CatchError(error);
@@ -37,24 +36,24 @@ const FriendSuggestion = () => {
 
   return (
     <div className="h-[250px] overflow-auto">
-      <Card title="Add new friends" divider>
+      <Card title="Friend's request" divider>
         {isLoading && <Skeleton active />}
 
         {error && <Error message={error.message} />}
 
-        {data && 
+        {data && (
           <div className="space-y-8">
             {data.map((item: any, index: number) => (
               <div key={index} className="space-y-3">
                 <div className="flex gap-4 items-center">
                   <img
-                    src={item.image || "/images/avatar.png"}
+                    src={item.user.image || "/images/avatar.png"}
                     alt="avatar"
                     className="w-12 h-12 rounded object-cover"
                   ></img>
                   <div>
                     <h1 className="text-black font-medium capitalize">
-                      {item.fullname}
+                      {item.user.fullname}
                     </h1>
                     <small className="text-gray-400">
                       {moment(item.createdAt).format("DD MMM, YYYY")}
@@ -68,22 +67,21 @@ const FriendSuggestion = () => {
 
                 <SmallButton
                   loading={loading.state && loading.index === index}
-                  onClick={() => sendFriendRequest(item._id, index)}
+                  onClick={() => acceptFriendRequest(item._id, index)}
                   type="pink"
-                  icon="user-add-line"
+                  icon="check-double-line"
                 >
-                  Add Friend
+                  Accept
                 </SmallButton>
               </div>
             ))}
           </div>
-        }
+        )}
 
         {data && data.length === 0 && <Empty />}
-
       </Card>
     </div>
   );
 };
 
-export default FriendSuggestion;
+export default FriendRequest;
