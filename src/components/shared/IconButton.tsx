@@ -21,6 +21,8 @@ const IconButtonModel = {
   info: "bg-cyan-50 text-cyan-500 hover:bg-cyan-500 hover:text-white rounded font-medium w-9 h-9 flex items-center justify-center",
 
   pink: "bg-pink-50 text-pink-500 hover:bg-pink-500 hover:text-white rounded font-medium w-9 h-9 flex items-center justify-center",
+
+    white: "bg-pink-50 text-pink-700 hover:bg-pink-100 hover:text-pink-700 rounded font-medium w-9 h-9 flex items-center justify-center",
 };
 
 interface IconButtonInterface {
@@ -32,7 +34,9 @@ interface IconButtonInterface {
     | "dark"
     | "success"
     | "info"
-    | "pink";
+    | "pink"
+    | "white"
+    
   onClick?: () => void;
   icon: string;
   key?: string | number;
