@@ -5,8 +5,6 @@ import Context from "../Context";
 
 const LoginGuard = () => {
 
-  return <Outlet />
-
   const { session, setSession } = useContext(Context);
 
   useEffect(() => {

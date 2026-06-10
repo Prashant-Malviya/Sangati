@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation , useNavigate} from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Avatar from "../shared/Avatar";
 import Card from "../shared/Card";
 import { useContext, useEffect, useState } from "react";
@@ -9,15 +9,20 @@ import { v4 as uuid } from "uuid";
 import useSWR, { mutate } from "swr";
 import Fetcher from "../../lib/Fetcher";
 import CatchError from "../../lib/CatchError";
-import FriendSuggestion from "./FriendSuggestion";
-import FriendRequest from "./FriendRequest";
+import FriendsSuggestion from "./friend/FriendsSuggestion";
+import FriendsRequest from "./friend/FriendsRequest";
+import FriendsList from "./friend/FriendsList";
+import { useMediaQuery } from "react-responsive";
+import Logo from "../shared/Logo";
+import IconButton from "../shared/IconButton";
 
-const EightMinuteInMs = 8*60*1000;
+const EightMinuteInMs = 8 * 60 * 1000;
 
 const Layout = () => {
-  const [leftAsideSize, setLeftAsideSize] = useState(350);
+  const isMobile = useMediaQuery({ query: "(max-width:1224px)" });
+  const [leftAsideSize, setLeftAsideSize] = useState(0);
   const rightAsideSize = 450;
-  const collapseSize = 140;
+  const [collapseSize, setCollapseSize] = useState(0);
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -26,11 +31,25 @@ const Layout = () => {
     shouldRetryOnError: false,
   });
 
-  useEffect(()=>{
-    if(error){
+  const friendUiBlacklist = [
+    "/app/friends",
+    "/app/chat",
+    "/app/audio-call",
+    "/app/video-call",
+  ];
+
+  const isBlackListed = friendUiBlacklist.some((path) => path === pathname);
+
+  useEffect(() => {
+    if (error) {
       logout();
     }
-  },[error])
+  }, [error]);
+
+  useEffect(() => {
+    setLeftAsideSize(isMobile ? 0 : 350);
+    setCollapseSize(isMobile ? 0 : 140);
+  }, [isMobile]);
 
   const { session, setSession } = useContext(Context);
 
@@ -61,19 +80,15 @@ const Layout = () => {
     },
   ];
 
-  const logout = async()=>{
+  const logout = async () => {
     try {
+      await HttpInterceptor.post("/auth/logout");
 
-    await HttpInterceptor.post("/auth/logout")
-    
-    navigate("/login")
-
+      navigate("/login");
     } catch (error) {
-
       CatchError(error);
-
     }
-  }
+  };
 
   const getPathName = (path: string) => {
     return path.split("/").pop()?.split("-").join(" ");
@@ -95,7 +110,7 @@ const Layout = () => {
       const payload = {
         path,
         type: file.type,
-        status: "public-read"
+        status: "public-read",
       };
 
       try {
@@ -109,11 +124,13 @@ const Layout = () => {
 
         await HttpInterceptor.put(data.url, file, options);
 
-       const {data: user} = await HttpInterceptor.put("/auth/profile-picture", { path });
+        const { data: user } = await HttpInterceptor.put(
+          "/auth/profile-picture",
+          { path },
+        );
 
-       setSession({...session, image: user.image})
-       mutate("/auth/refresh-token");
-       
+        setSession({ ...session, image: user.image });
+        mutate("/auth/refresh-token");
       } catch (error) {
         console.log(error);
       }
@@ -122,11 +139,30 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen">
+      <nav
+        style={sidebarStyle}
+        className="lg:hidden flex justify-between items-center sticky top-0 left-0 z-[20000] w-full py-4 px-6"
+      >
+        <Logo />
+        <div className="flex gap-4">
+          <IconButton onClick={logout} icon="logout-circle-line" type="danger" />
+          <Link to="/app/friends">
+           <IconButton icon="chat-ai-line" type="primary" />
+          </Link>
+         
+          <IconButton  onClick={() =>
+                  setLeftAsideSize(leftAsideSize === 250 ? collapseSize : 250)
+                } icon="menu-3-line" type="white" />
+        </div>
+      </nav>
       <aside
-        className="bg-white fixed top-0 left-0 h-full p-8 overflow-auto"
+        className="bg-white fixed top-0 left-0 h-full lg:p-8 overflow-auto z-[20000]"
         style={{ width: leftAsideSize, transition: "0.3s" }}
       >
-        <div className=" space-y-8 h-full rounded-2xl p-8" style={sidebarStyle}>
+        <div
+          className=" space-y-8 h-full lg:rounded-2xl p-8"
+          style={sidebarStyle}
+        >
           {leftAsideSize === collapseSize ? (
             <i
               className="ri-user-fill text-xl text-white animate__animated animate__fadeIn"
@@ -164,7 +200,10 @@ const Layout = () => {
               </Link>
             ))}
 
-            <button onClick={logout} className="flex items-center gap-2 text-gray-300 py-3 hover:text-white">
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 text-gray-300 py-3 hover:text-white"
+            >
               <i className="ri-logout-circle-r-line text-xl" title="Logout"></i>
               <label
                 className={`${leftAsideSize === collapseSize ? "hidden" : ""}`}
@@ -177,18 +216,22 @@ const Layout = () => {
       </aside>
 
       <section
-        className="py-8 px-1"
+        className="lg:py-8 lg:px-1 p-6 space-y-8"
         style={{
-          width: `calc(100% - ${leftAsideSize + rightAsideSize}px)`,
-          marginLeft: leftAsideSize,
+          width: isMobile
+            ? "100%"
+            : `calc(100% - ${leftAsideSize + rightAsideSize}px)`,
+          marginLeft: isMobile ? 0 : leftAsideSize,
           transition: "0.3s",
         }}
       >
+        {!isBlackListed && <FriendsRequest />}
+
         <Card
           title={
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <button
-                className="bg-gray-100 w-10 h-10 rounded-full hover:bg-slate-200"
+                className="lg:block hidden bg-gray-100 w-10 h-10 rounded-full hover:bg-slate-200"
                 onClick={() =>
                   setLeftAsideSize(leftAsideSize === 350 ? collapseSize : 350)
                 }
@@ -202,63 +245,21 @@ const Layout = () => {
         >
           {pathname === "/app" ? <Dashboard /> : <Outlet />}
         </Card>
+
+        {!isBlackListed && <FriendsSuggestion />}
       </section>
 
       <aside
-        className="bg-white fixed top-0 right-0 h-full overflow-auto"
+        className="lg:block hidden bg-white fixed top-0 right-0 h-full overflow-auto"
         style={{ width: rightAsideSize, transition: "0.2s" }}
       >
-       <FriendSuggestion />
-       <FriendRequest />
+        {!isBlackListed && (
+          <Card title="Friends" divider>
+            <FriendsList gap={6} columns={2} />
+          </Card>
+        )}
 
-        <Card title="Friends" divider>
-          <div className="space-y-4">
-            {Array(20)
-              .fill(0)
-              .map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-50 p-3 rounded-lg flex justify-between"
-                >
-                  <Avatar
-                    size="md"
-                    image="/images/avatar.png"
-                    title="Prashant Malviya"
-                    subtitle={
-                      <small
-                        className={`${index % 2 === 0 ? "text-zinc-400" : "text-green-600"} font-medium`}
-                      >
-                        {index % 2 === 0 ? "Offline" : "Online"}
-                      </small>
-                    }
-                  />
-
-                  <div className="space-x-3">
-                    <Link to="/app/chat">
-                      <button className="hover:text-pink-700 text-pink-800">
-                        <i className="ri-chat-ai-line" title="Chat"></i>
-                      </button>
-                    </Link>
-
-                    <Link to="/app/audio-call">
-                      <button className="hover:text-green-600 text-green-700">
-                        <i className="ri-phone-line" title="Call"></i>
-                      </button>
-                    </Link>
-
-                    <Link to="/app/video-call">
-                      <button className="hover:text-amber-500 text-amber-600">
-                        <i
-                          className="ri-video-on-ai-line"
-                          title="Video Call"
-                        ></i>
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </Card>
+        <Card title="Recent Posts"></Card>
       </aside>
     </div>
   );

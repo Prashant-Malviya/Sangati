@@ -7,7 +7,6 @@ import Signup from "./components/Signup";
 import Layout from "./components/app/Layout";
 import Dashboard from "./components/app/Dashboard";
 import Post from "./components/app/Post";
-import Friends from "./components/app/Friends";
 import Video from "./components/app/Video";
 import Audio from "./components/app/Audio";
 import Chat from "./components/app/Chat";
@@ -18,6 +17,7 @@ import { useState } from "react";
 import AuthGuard from "./guards/AuthGuard";
 import LoginGuard from "./guards/LoginGuard";
 import "font-awesome/css/font-awesome.min.css";
+import FriendsList from "./components/app/friend/FriendsList";
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -27,18 +27,17 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/*           
-          <Route element={<LoginGuard />}>
-            
-          </Route> */}
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route element={<LoginGuard />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Route>
+
           <Route element={<AuthGuard />}>
             <Route path="/app" element={<Layout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="my-posts" element={<Post />} />
-              <Route path="friends" element={<Friends />} />
+              <Route path="friends" element={<FriendsList />} />
               <Route path="video-call" element={<Video />} />
               <Route path="audio-call" element={<Audio />} />
               <Route path="chat" element={<Chat />} />
