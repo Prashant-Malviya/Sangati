@@ -1,10 +1,29 @@
+import { useEffect } from "react";
+import socket from "../../lib/socket";
 import Avatar from "../shared/Avatar";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
+import SmallButton from "../shared/SmallButton";
 
 const Chat = () => {
+
+  useEffect(()=>{
+    socket.on("message",(msg)=>{
+      console.log(msg);
+      
+    })
+  },[])
+
+  const sendMessage = ()=>{
+    socket.emit("message","Namaste Prashant")
+  }
+
   return (
     <div>
+      
+      <SmallButton onClick={sendMessage}>Testing...</SmallButton>
+
+      {/*
       <div className="h-[450px] overflow-auto space-y-12">
         {Array(20)
           .fill(0)
@@ -50,6 +69,7 @@ const Chat = () => {
           </button>
         </div>
       </div>
+      */}
     </div>
   );
 };
