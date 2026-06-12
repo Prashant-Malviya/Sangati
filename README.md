@@ -6,6 +6,9 @@ Sangati is a full-stack social networking platform designed to connect like-mind
 
 Built using the MERN Stack, Socket.io, and WebRTC, Sangati focuses on real-time communication, scalability, and a seamless user experience.
 
+<img width="1862" height="955" alt="image" src="https://github.com/user-attachments/assets/ab005ae8-12b9-4f86-9c49-ac6253b01361" />
+
+
 ---
 
 ## 🚀 Features
