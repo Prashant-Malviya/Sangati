@@ -1,73 +1,246 @@
-# React + TypeScript + Vite
+# Sangati
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Connect. Share. Collaborate.
 
-Currently, two official plugins are available:
+Sangati is a full-stack social networking platform designed to connect like-minded people through meaningful interactions. Users can share blogs, communicate through real-time messaging, participate in audio and video calls, follow other users, and discover new connections through personalized recommendations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Built using the MERN Stack, Socket.io, and WebRTC, Sangati focuses on real-time communication, scalability, and a seamless user experience.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 👤 Authentication & Authorization
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Secure user registration and login
+* JWT-based authentication
+* Protected routes and middleware
+* Role-based authorization
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 📝 Blogging Platform
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Create, edit, and delete blogs
+* Rich content sharing
+* View blogs from followed users
+* Personalized content feed
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 💬 Real-Time Chat
+
+* One-to-one messaging
+* Real-time communication using Socket.io
+* Instant message delivery
+* Online/offline user status
+
+### 📞 Audio Calling
+
+* Peer-to-peer audio communication
+* Real-time signaling using WebSockets
+* Built using WebRTC fundamentals
+
+### 🎥 Video Calling
+
+* One-to-one video calling
+* WebRTC-powered media streaming
+* Real-time call setup and management
+
+### 🤝 Social Networking
+
+* Follow and unfollow users
+* Discover like-minded people
+* User profile management
+* Personalized suggestions based on network connections
+
+### 📚 API Documentation
+
+* Interactive API documentation using Swagger UI
+* Easy testing and exploration of endpoints
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend
+
+* React.js
+* React Router
+* Axios
+* Tailwind CSS
+* Context API
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+
+### Real-Time Communication
+
+* Socket.io
+* WebRTC
+
+### Authentication
+
+* JWT (JSON Web Tokens)
+* Bcrypt.js
+
+### Documentation
+
+* Swagger UI
+
+---
+
+## 📂 Project Structure
+
+```text
+Sangati/
+│
+├── client/                 # React Frontend
+│
+├── server/                 # Express Backend
+│   ├── controllers/
+│   ├── routes/
+│   ├── middleware/
+│   ├── models/
+│   ├── services/
+│   └── config/
+│
+├── docs/                   # API Documentation
+│
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔄 Application Flow
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```text
+Frontend (React)
+        │
+        ▼
+REST APIs (Express)
+        │
+        ▼
+MongoDB Database
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Real-Time Features
+        │
+        ▼
+Socket.io + WebRTC
 ```
+
+## ⚡ Key Highlights
+
+* Full-Stack MERN Application
+* Real-Time Messaging System
+* Audio Calling using WebRTC
+* Video Calling using WebRTC
+* Secure JWT Authentication
+* Role-Based Authorization
+* Swagger API Documentation
+* Scalable Backend Architecture
+* Responsive User Interface
+
+---
+
+## 🛠️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Prashant-Malviya/Sangati.git
+```
+
+### Navigate to Project
+
+```bash
+cd Sangati
+```
+
+### Install Dependencies
+
+#### Frontend
+
+```bash
+cd client
+npm install
+```
+
+#### Backend
+
+```bash
+cd server
+npm install
+```
+
+### Configure Environment Variables
+
+Create a `.env` file inside the server directory:
+
+```env
+PORT=5000
+
+MONGODB_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+CLIENT_URL=http://localhost:3000
+```
+
+### Run Backend
+
+```bash
+npm run dev
+```
+
+### Run Frontend
+
+```bash
+npm start
+```
+
+---
+
+## 📖 API Documentation
+
+Swagger UI documentation is available after running the server.
+
+```text
+http://localhost:5000/api-docs
+```
+
+---
+
+## 🔮 Future Enhancements
+
+* Group Chat
+* Group Video Calling
+* Notifications System
+* Post Likes & Comments
+* Media Sharing
+* AI-Powered User Recommendations
+* Community Creation
+* Mobile Application Support
+
+---
+
+## 🤝 Contributing
+
+Contributions, suggestions, and feedback are welcome.
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push the branch
+5. Open a Pull Request
+
+---
+
+## 📧 Contact
+
+### Prashant Malviya
+
+* GitHub: https://github.com/Prashant-Malviya
+* LinkedIn: https://linkedin.com/in/prashantmalviya
+
+---
+
+⭐ If you found this project useful, consider giving it a star.
