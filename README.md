@@ -8,6 +8,20 @@ Built using the MERN Stack, Socket.io, and WebRTC, Sangati focuses on real-time 
 
 <img width="1862" height="955" alt="image" src="https://github.com/user-attachments/assets/ab005ae8-12b9-4f86-9c49-ac6253b01361" />
 
+Built using the MERN Stack, Socket.io, and WebRTC, Sangati focuses on real-time communication, scalability, and a seamless user experience.
+
+---
+
+## 📦 Project Repositories
+
+This project is maintained as two separate repositories.
+
+### Frontend Repository
+https://github.com/Prashant-Malviya/Sangati
+
+### Backend Repository
+https://github.com/Prashant-Malviya/Sangati-Backend
+
 
 ---
 
