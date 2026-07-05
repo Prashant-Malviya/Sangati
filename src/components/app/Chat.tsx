@@ -6,21 +6,18 @@ import Input from "../shared/Input";
 import SmallButton from "../shared/SmallButton";
 
 const Chat = () => {
-
-  useEffect(()=>{
-    socket.on("message",(msg)=>{
+  useEffect(() => {
+    socket.on("message", (msg) => {
       console.log(msg);
-      
-    })
-  },[])
+    });
+  }, []);
 
-  const sendMessage = ()=>{
-    socket.emit("message","Namaste Prashant")
-  }
+  const sendMessage = () => {
+    socket.emit("message", "Namaste Prashant");
+  };
 
   return (
     <div>
-      
       <SmallButton onClick={sendMessage}>Testing...</SmallButton>
 
       {/*

@@ -15,6 +15,7 @@ import FriendsList from "./friend/FriendsList";
 import { useMediaQuery } from "react-responsive";
 import Logo from "../shared/Logo";
 import IconButton from "../shared/IconButton";
+import FriendsOnline from "./friend/FriendsOnline";
 
 const EightMinuteInMs = 8 * 60 * 1000;
 
@@ -253,13 +254,8 @@ const Layout = () => {
         className="lg:block hidden bg-white fixed top-0 right-0 h-full overflow-auto"
         style={{ width: rightAsideSize, transition: "0.2s" }}
       >
-        {!isBlackListed && (
-          <Card title="Friends" divider>
-            <FriendsList gap={6} columns={2} />
-          </Card>
-        )}
 
-        <Card title="Recent Posts"></Card>
+          <FriendsOnline />
       </aside>
     </div>
   );
