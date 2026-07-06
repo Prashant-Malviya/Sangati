@@ -146,14 +146,22 @@ const Layout = () => {
       >
         <Logo />
         <div className="flex gap-4">
-          <IconButton onClick={logout} icon="logout-circle-line" type="danger" />
+          <IconButton
+            onClick={logout}
+            icon="logout-circle-line"
+            type="danger"
+          />
           <Link to="/app/friends">
-           <IconButton icon="chat-ai-line" type="primary" />
+            <IconButton icon="chat-ai-line" type="primary" />
           </Link>
-         
-          <IconButton  onClick={() =>
-                  setLeftAsideSize(leftAsideSize === 250 ? collapseSize : 250)
-                } icon="menu-3-line" type="white" />
+
+          <IconButton
+            onClick={() =>
+              setLeftAsideSize(leftAsideSize === 250 ? collapseSize : 250)
+            }
+            icon="menu-3-line"
+            type="white"
+          />
         </div>
       </nav>
       <aside
@@ -254,8 +262,7 @@ const Layout = () => {
         className="lg:block hidden bg-white fixed top-0 right-0 h-full overflow-auto"
         style={{ width: rightAsideSize, transition: "0.2s" }}
       >
-
-          <FriendsOnline />
+        <FriendsOnline />
       </aside>
     </div>
   );
