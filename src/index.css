@@ -21,3 +21,8 @@
   height: 100%;
   object-fit: cover;
 }
+
+.capitalize-firt::first-letter{
+
+  text-transform: uppercase,
+}

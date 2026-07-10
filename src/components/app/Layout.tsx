@@ -11,7 +11,6 @@ import Fetcher from "../../lib/Fetcher";
 import CatchError from "../../lib/CatchError";
 import FriendsSuggestion from "./friend/FriendsSuggestion";
 import FriendsRequest from "./friend/FriendsRequest";
-import FriendsList from "./friend/FriendsList";
 import { useMediaQuery } from "react-responsive";
 import Logo from "../shared/Logo";
 import IconButton from "../shared/IconButton";
@@ -27,10 +26,10 @@ const Layout = () => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { error } = useSWR("/auth/refresh-token", Fetcher, {
-    refreshInterval: EightMinuteInMs,
-    shouldRetryOnError: false,
-  });
+  // const { error } = useSWR("/auth/refresh-token", Fetcher, {
+  //   refreshInterval: EightMinuteInMs,
+  //   shouldRetryOnError: false,
+  // });
 
   const friendUiBlacklist = [
     "/app/friends",
@@ -41,11 +40,11 @@ const Layout = () => {
 
   const isBlackListed = friendUiBlacklist.some((path) => path === pathname);
 
-  useEffect(() => {
-    if (error) {
-      logout();
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     logout();
+  //   }
+  // }, [error]);
 
   useEffect(() => {
     setLeftAsideSize(isMobile ? 0 : 350);
