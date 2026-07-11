@@ -1,11 +1,14 @@
 import Card from "../../shared/Card";
 import socket from "../../../lib/socket";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IconButton from "../../shared/IconButton";
+import Context from "../../../Context";
 
 const FriendsOnline = () => {
-  const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const {session} = useContext(Context);
+  console.log(onlineUsers)
 
   const onlineHandler = (users: any) => {
     setOnlineUsers(users);
@@ -24,7 +27,7 @@ const FriendsOnline = () => {
   return (
     <Card title="Online Friends" divider>
       <div className="space-y-6">
-        {onlineUsers.map((item: any, index) => (
+        { session && onlineUsers.filter((item:any)=>item.id !== session.id).map((item: any, index) => (
           <div key={index} className="flex">
             <div className="flex gap-3">
               <img
@@ -33,18 +36,15 @@ const FriendsOnline = () => {
                 alt=""
               />
               <div>
-                <h1 className="font-medium mb-1">{item.id}</h1>
+                <h1 className="font-medium mb-1 capitalize">{item.fullname}</h1>
 
                 <div className="flex items-center gap-3">
                   <label
                     htmlFor=""
                     className={`capitalize-firt text-[10px] font-medium ${item.status === "online" ? "text-green-400" : "text-gray-500"}`}
                   >
-                    {item.status}</label>
-                    {
-                    (item.status === "online") && (
-                      <>
-                        <Link to="/app/chat">
+                    online</label>
+                     <Link to="/app/chat">
                           <i className="ri-chat-ai-line text-pink-600"></i>
                         </Link>
 
@@ -55,8 +55,7 @@ const FriendsOnline = () => {
                         <Link to="/app/chat">
                           <i className="ri-video-on-ai-line text-blue-600"></i>
                         </Link>
-                      </>
-                    )}
+                    
                   
                 </div>
               </div>
